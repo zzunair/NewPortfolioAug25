@@ -29,33 +29,56 @@ const ContactSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-  const recaptchaToken = recaptchaRef.current?.getValue();
-  if (!recaptchaToken) {
-    toast({ title: "Please complete the reCAPTCHA", variant: "destructive" });
-    setIsSubmitting(false);
-    return;
-  }
-
-  try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...formData, recaptchaToken }),
-    });
-
-    const data = await response.json();
-    if (data.success) {
-      toast({ title: "Message Sent!", description: "I'll get back to you soon." });
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      recaptchaRef.current?.reset();
-    } else {
-      toast({ title: "Error", description: data.message, variant: "destructive" });
+    const recaptchaToken = recaptchaRef.current?.getValue();
+    if (!recaptchaToken) {
+      toast({ title: "Please complete the reCAPTCHA", variant: "destructive" });
+      setIsSubmitting(false);
+      return;
     }
-  } catch {
-    toast({ title: "Error", description: "Failed to send. Try again.", variant: "destructive" });
-  } finally {
-    setIsSubmitting(false);
-  }
+
+    // Abort the request after 15 seconds to prevent infinite spinning
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, recaptchaToken }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      // Handle non-JSON responses (e.g. 502 HTML error pages from the server)
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error(`Server error (${response.status})`);
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        toast({ title: "Message Sent!", description: "I'll get back to you soon." });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        recaptchaRef.current?.reset();
+      } else {
+        toast({ title: "Error", description: data.message, variant: "destructive" });
+        recaptchaRef.current?.reset();
+      }
+    } catch (err: unknown) {
+      clearTimeout(timeoutId);
+      const isTimeout = err instanceof Error && err.name === 'AbortError';
+      toast({
+        title: "Error",
+        description: isTimeout
+          ? "Request timed out. The server may be starting up — please try again in 30 seconds."
+          : "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+      recaptchaRef.current?.reset();
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
