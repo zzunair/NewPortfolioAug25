@@ -12,6 +12,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Trust Render's reverse proxy so express-rate-limit can read the real client IP
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet());
 
