@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from 'lucide-react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useRef } from 'react';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +16,7 @@ const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -26,15 +29,33 @@ const ContactSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
-      });
+  const recaptchaToken = recaptchaRef.current?.getValue();
+  if (!recaptchaToken) {
+    toast({ title: "Please complete the reCAPTCHA", variant: "destructive" });
+    setIsSubmitting(false);
+    return;
+  }
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...formData, recaptchaToken }),
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      toast({ title: "Message Sent!", description: "I'll get back to you soon." });
       setFormData({ name: '', email: '', subject: '', message: '' });
-      setIsSubmitting(false);
-    }, 1000);
+      recaptchaRef.current?.reset();
+    } else {
+      toast({ title: "Error", description: data.message, variant: "destructive" });
+    }
+  } catch {
+    toast({ title: "Error", description: "Failed to send. Try again.", variant: "destructive" });
+  } finally {
+    setIsSubmitting(false);
+  }
   };
 
   const contactInfo = [
@@ -194,7 +215,13 @@ const ContactSection = () => {
                   placeholder="Tell me about your project, timeline, budget, and any specific requirements..."
                 />
               </div>
-
+              <div className="mb-4">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                  theme="dark"
+                />
+              </div>
               <Button
                 type="submit"
                 size="lg"
