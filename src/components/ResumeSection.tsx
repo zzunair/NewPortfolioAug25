@@ -1,4 +1,5 @@
 import { Calendar, MapPin, Phone, Mail, Award, GraduationCap, Briefcase, Focus, Download } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import resume from "../../public/images/others/resume.pdf";
 
 const ResumeSection = () => {
@@ -25,6 +26,31 @@ const ResumeSection = () => {
   ];
 
   const experience = [
+    {
+      title: "Team Lead | Senior Software Engineer",
+      company: "Contour Software",
+      period: "Sep 2025 - Present",
+      location: "Lahore, Pakistan",
+      description: [
+        "Working as a Team Lead and Senior Software Engineer on Contour Software",
+        "Responsible for leading a team of developers and ensuring the successful delivery of projects",
+        "Hired as a Senior Software Engineer, leading Shopify and BigCommerce development initiatives and delivering scalable eCommerce solutions",
+"Promoted to Team Lead & Mentor, overseeing project architecture, guiding developers, conducting code reviews, and driving technical excellence across the team"
+      ]
+    },
+    {
+      title: "SENIOR SHOPIFY DEVELOPER",
+      company: "HoneyBalm",
+      period: "Feb 2025 - Sep 2025",
+      location: "Remote",
+      description: [
+        "Worked as a Senior Shopify developer on HoneyBalm",
+        "Developed and maintained 10 different Shopify stores and themes for HoneyBalm",
+        "Optimized storefront performance, reducing page load time and improving overall Lighthouse scores for better conversion rates",
+        "Integrated third-party apps, payment gateways, and custom APIs to streamline operations and enhance user experience",
+        "Collaborated with design and marketing teams to implement CRO strategies, A/B tests, and custom Shopify features that increased sales and customer engagement"
+      ]
+    },
     {
       title: "SHOPIFY | BIGCOMMERCE | FULLSTACK DEVELOPER",
       company: "UPWORK",
@@ -175,41 +201,62 @@ const ResumeSection = () => {
           {/* Right Column - Professional Experience */}
           <div className="animate-slide-up" style={{ animationDelay: '200ms' }}>
             <div className="bg-card border border-border rounded-lg p-8 hover:shadow-medium hover:border-primary/30 transition-all duration-300">
-              <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
+              <h3 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-3">
                 <Briefcase className="w-6 h-6 text-primary" />
                 Professional Experience
               </h3>
-              <div className="space-y-6">
+              <Accordion type="single" collapsible className="w-full">
                 {experience.map((exp, index) => (
-                  <div key={index} className="relative pl-6 border-l-2 border-primary/30">
-                    <div className="absolute -left-2 top-0 w-4 h-4 bg-primary rounded-full border-2 border-background"></div>
-                    <div className="mb-3">
-                      <h4 className="font-semibold text-foreground text-lg mb-1">{exp.title}</h4>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
-                        <span className="text-primary font-medium">{exp.company}</span>
-                        <span>•</span>
-                        <span>{exp.location}</span>
+                  <AccordionItem 
+                    key={index} 
+                    value={`item-${index}`}
+                    className="border-b border-border last:border-b-0"
+                  >
+                    <AccordionTrigger className="hover:no-underline py-6 px-0">
+                      <div className="flex flex-col gap-2 w-full text-left">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                          <div className="flex flex-col gap-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="font-bold text-foreground text-lg">
+                                {exp.title}
+                              </span>
+                              <span className="text-muted-foreground hidden sm:inline">|</span>
+                              <span className="text-primary font-semibold">
+                                {exp.company}
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mt-1">
+                              <div className="flex items-center gap-1.5">
+                                <MapPin className="w-4 h-4" />
+                                <span>{exp.location}</span>
+                              </div>
+                              <span>•</span>
+                              <div className="flex items-center gap-1.5">
+                                <Calendar className="w-4 h-4" />
+                                <span>{exp.period}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Calendar className="w-4 h-4" />
-                        <span>{exp.period}</span>
-                      </div>
-                    </div>
-                    {Array.isArray(exp.description) ? (
-                      <ul className="text-muted-foreground leading-relaxed space-y-2">
-                        {exp.description.map((item, bulletIndex) => (
-                          <li key={bulletIndex} className="flex items-start gap-2">
-                            <span className="text-primary text-sm mt-1">•</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-muted-foreground leading-relaxed">{exp.description}</p>
-                    )}
-                  </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-6 pt-0 px-0">
+                      {Array.isArray(exp.description) ? (
+                        <ul className="space-y-3">
+                          {exp.description.map((item, bulletIndex) => (
+                            <li key={bulletIndex} className="flex items-start gap-3">
+                              <span className="text-primary mt-1.5 shrink-0">▸</span>
+                              <span className="text-muted-foreground leading-relaxed flex-1">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-muted-foreground leading-relaxed">{exp.description}</p>
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
                 ))}
-              </div>
+              </Accordion>
             </div>
           </div>
         </div>
