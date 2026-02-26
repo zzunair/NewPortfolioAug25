@@ -31,5 +31,6 @@ dist-ssr
 .env.local
 .env.development
 .env.production
+/server/node_modules
 package-lock.json
 server/.env
