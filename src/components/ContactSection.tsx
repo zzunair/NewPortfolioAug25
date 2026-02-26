@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from 'lucide-react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { useRef } from 'react';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -29,8 +28,11 @@ const ContactSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Only require reCAPTCHA if the site key is configured
+    const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
     const recaptchaToken = recaptchaRef.current?.getValue();
-    if (!recaptchaToken) {
+    
+    if (recaptchaSiteKey && !recaptchaToken) {
       toast({ title: "Please complete the reCAPTCHA", variant: "destructive" });
       setIsSubmitting(false);
       return;
@@ -44,7 +46,10 @@ const ContactSection = () => {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, recaptchaToken }),
+        body: JSON.stringify({
+          ...formData,
+          ...(recaptchaToken && { recaptchaToken }),
+        }),
         signal: controller.signal,
       });
 
@@ -238,13 +243,23 @@ const ContactSection = () => {
                   placeholder="Tell me about your project, timeline, budget, and any specific requirements..."
                 />
               </div>
-              <div className="mb-4">
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                  theme="dark"
-                />
-              </div>
+              {import.meta.env.VITE_RECAPTCHA_SITE_KEY && (
+                <div className="mb-4">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                    theme="dark"
+                    onErrored={() => {
+                      console.error('reCAPTCHA failed to load');
+                      toast({
+                        title: "reCAPTCHA Error",
+                        description: "Please refresh the page if the reCAPTCHA doesn't appear.",
+                        variant: "destructive",
+                      });
+                    }}
+                  />
+                </div>
+              )}
               <Button
                 type="submit"
                 size="lg"
