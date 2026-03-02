@@ -73,7 +73,7 @@ const Index = () => {
       <footer className="bg-card border-t border-border py-8">
         <div className="container mx-auto px-6 text-center">
           <p className="text-muted-foreground">
-            © 2025 Zunair Shahid. Built with React, Vite, and Tailwind CSS.
+            © 2026 Zunair Shahid. Built with React, Vite, and Tailwind CSS.
           </p>
         </div>
       </footer>
