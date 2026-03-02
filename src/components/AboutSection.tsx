@@ -43,6 +43,8 @@ const AboutSection = () => {
               <img
                 src={developerPhoto}
                 alt="Web Developer"
+                loading="lazy"
+                decoding="async"
                 className="w-full max-w-md mx-auto rounded-2xl shadow-large object-cover"
               />
               <div className="absolute inset-0 bg-gradient-primary opacity-10 rounded-2xl"></div>
