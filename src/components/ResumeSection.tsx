@@ -27,7 +27,7 @@ const ResumeSection = () => {
 
   const experience = [
     {
-      title: "Team Lead | Senior Software Engineer",
+      title: "TEAM LEAD & SENIOR SOFTWARE ENGINEER",
       company: "Contour Software",
       period: "Sep 2025 - Present",
       location: "Lahore, Pakistan",
@@ -190,7 +190,7 @@ const ResumeSection = () => {
             {/* Download Resume */}
             <div className="bg-card border border-border rounded-lg px-8 py-6 hover:shadow-medium hover:border-primary/30 transition-all duration-300">
               <a href={resume} target="_blank" rel="noopener noreferrer">
-                <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
+                <h3 className="text-2xl font-bold text-foreground flex items-center gap-3">
                   <Download className="w-6 h-6 text-primary" />
                   Download Resume
                 </h3>

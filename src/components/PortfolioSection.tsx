@@ -1075,6 +1075,32 @@ const PortfolioSection = () => {
       githubUrl: "",
       category2: "Skincare, Cosmetics",
     },
+    {
+      id: 85,
+      title: "MCHN",
+      category: "shopify",
+      description:
+        "Custom Shopify theme with advanced product filtering and checkout optimization",
+      image: "/images/projects/mchn.png",
+      tech: ["Shopify", "Liquid", "JavaScript", "CSS"],
+      liveUrl: "https://mchn.co/",
+      showGithub: false,
+      githubUrl: "",
+      category2: "Lifestyle",
+    },
+    {
+      id: 86,
+      title: "I AM MIAMI",
+      category: "shopify",
+      description:
+        "Custom Shopify theme with advanced product filtering and checkout optimization",
+      image: "/images/projects/iammiami.png",
+      tech: ["Shopify", "Liquid", "JavaScript", "CSS"],
+      liveUrl: "https://iammiami.com/",
+      showGithub: false,
+      githubUrl: "",
+      category2: "Lifestyle, Fashion, Apparel",
+    },
   ];
 
   const filters = [
