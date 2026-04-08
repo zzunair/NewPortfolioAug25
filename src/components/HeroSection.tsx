@@ -10,14 +10,14 @@ const HeroSection = () => {
   };
 
   const specializations = [
-    { icon: <ShoppingBag className="w-5 h-5" />, text: "Shopify & BigCommerce" },
-    { icon: <Database className="w-5 h-5" />, text: "MERN Stack" },
-    { icon: <Code2 className="w-5 h-5" />, text: "Next.js & React" },
+    { icon: <ShoppingBag className="w-5 h-5" />, text: "Shopify CRO Optimization" },
+    { icon: <Database className="w-5 h-5" />, text: "Shopify Speed Optimization" },
+    { icon: <Code2 className="w-5 h-5" />, text: "Custom Development (Next.js / React)" },
   ];
 
   const stats = [
     { number: "100+", label: "Projects Delivered" },
-    { number: "7+", label: "Years Experience" },
+    { number: "8+", label: "Years Experience" },
     { number: "60+", label: "Happy Clients" },
   ];
 
@@ -60,11 +60,12 @@ const HeroSection = () => {
 
           {/* Main Heading */}
           <div className="text-center mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">Crafting Digital</span>
-              <br />
+            <h2 className="text-2xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                <span className="text-foreground">Zunair Shahid</span>
+              </h2>
+            <h1 className="text-3xl md:text-3xl lg:text-4xl font-bold mb-6 leading-tight">
               <span className="text-primary relative inline-block">
-                Excellence
+              Shopify CRO & Performance Developer
                 <svg className="absolute -bottom-2 left-0 w-full" height="12" viewBox="0 0 300 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 10C50 5 100 2 150 3C200 4 250 7 298 10" stroke="hsl(var(--primary))" strokeWidth="3" strokeLinecap="round"/>
                 </svg>
@@ -72,8 +73,7 @@ const HeroSection = () => {
             </h1>
             
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-              Full-Stack Developer specialized in building high-performance e-commerce solutions 
-              and scalable web applications that drive business growth.
+              I help Shopify stores increase conversions, improve speed, and generate more revenue through data-driven optimization and custom development.
             </p>
 
             {/* Specializations */}

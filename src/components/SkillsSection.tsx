@@ -1,36 +1,36 @@
-import { Code, ShoppingCart, Database, Globe, Palette, Smartphone } from 'lucide-react';
+import { Code, ShoppingCart, Database, Globe, Palette, Smartphone, User, Store } from 'lucide-react';
 
 const SkillsSection = () => {
   const skills = [
     {
       icon: <ShoppingCart className="w-8 h-8" />,
-      name: "Shopify",
-      description: "Custom themes, apps, headless stores and store optimization"
+      name: "Shopify Optimization & Development",
+      description: "Conversion-focused Shopify solutions designed to increase revenue and improve user experience. Custom themes & sections, Conversion rate optimization (CRO), Performance & speed improvements, Shopify Plus enhancements"
     },
     {
       icon: <ShoppingCart className="w-8 h-8" />,
-      name: "BigCommerce", 
-      description: "Enterprise e-commerce solutions and integrations"
+      name: "Shopify Integrations & Scalable Solutions", 
+      description: "Advanced eCommerce setups for growing brands. Third-party app integrations, Custom functionality development, API integrations, Scalable store architecture"
     },
     {
       icon: <Database className="w-8 h-8" />,
-      name: "MERN Stack",
-      description: "MongoDB, Express, React, and Node.js development"
+      name: "Headless & Modern Frontend (Next.js / React)",
+      description: "For brands that need flexibility beyond traditional Shopify themes. Headless Shopify storefronts, Next.js & React applications, Performance-focused frontend architecture"
     },
     {
       icon: <Globe className="w-8 h-8" />,
-      name: "Next.js",
-      description: "Server-side rendering and modern React applications"
+      name: "UI/UX Optimization for eCommerce",
+      description: "Design improvements that directly impact conversions. Product page optimization, Checkout experience improvements, Mobile-first UX enhancements, User behavior analysis"
     },
     {
       icon: <Palette className="w-8 h-8" />,
-      name: "UI/UX Design",
-      description: "User-centered design and interface optimization"
+      name: "Performance & Speed Engineering",
+      description: "Speed is directly tied to revenue — I make stores fast. Core Web Vitals optimization, Asset & script optimization, App performance cleanup, Lazy loading & advanced techniques"
     },
     {
       icon: <Smartphone className="w-8 h-8" />,
-      name: "On Going Maintenance and Support",
-      description: "Support services to ensure your website runs smoothly and is up-to-date."
+      name: "Ongoing Growth & Support",
+      description: "Long-term support to continuously improve store performance. Continuous optimization, Store maintenance, Feature enhancements, Technical support"
     }
   ];
 
@@ -42,7 +42,7 @@ const SkillsSection = () => {
             Technical Expertise
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Delivering cutting-edge solutions with modern technologies and best practices
+            Focused on building high-performing eCommerce experiences with Shopify at the core, supported by modern web technologies.
           </p>
         </div>
         

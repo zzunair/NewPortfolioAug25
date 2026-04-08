@@ -67,16 +67,13 @@ const AboutSection = () => {
 
             <div className="space-y-6 text-muted-foreground text-lg leading-relaxed">
               <p>
-                I am a professional web developer with specialization in
-                e-commerce. My passion lies in assisting individuals to launch
-                their online businesses by developing their websites and
-                providing them with guidance to create a positive impression on
-                their customers. My core competencies include expertise in
-                Shopify, WordPress, Bigcommerce, and website design. Although I
-                have a considerable amount of experience in website design, I
-                understand the importance of staying up-to-date with the
-                constantly evolving technological landscape. I am committed to
-                continuously learning and staying curious.
+              I’m Zunair Shahid, a Shopify-focused web developer with a strong specialization in eCommerce. I help brands launch, optimize, and scale their online stores by combining high-performing development with conversion-focused design.
+<br />
+With 8+ years of experience, I’ve worked with 100+ clients worldwide, building and improving stores that not only look great but are designed to convert and perform. My approach goes beyond development — I guide businesses in creating a seamless user experience that builds trust and drives sales.
+<br />
+While Shopify is my core focus, I also work with modern technologies like Next.js and React to deliver advanced, scalable solutions when needed. I continuously refine my skills to stay aligned with the evolving eCommerce landscape.
+<br />
+My goal is simple: help businesses create fast, optimized, and conversion-driven online stores that leave a lasting impression.
               </p>
 
               {/* <p>

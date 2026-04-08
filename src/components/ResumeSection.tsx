@@ -129,7 +129,7 @@ const ResumeSection = () => {
                 Summary
               </h3>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Skilled web developer with 7+ years of experience in designing and developing user-focused websites and web applications, proficient in front-end and back-end technologies.
+              Shopify CRO & performance developer with 8+ years of experience helping eCommerce brands increase conversions, improve site speed, and scale revenue. Specialized in data-driven optimization, custom Shopify development, and building high-performing storefronts that turn traffic into sales.
               </p>
               
               {/* Contact Details */}
