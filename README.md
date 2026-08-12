@@ -1,73 +1,64 @@
-# Welcome to your Lovable project
+# Zunair Shahid — Portfolio
 
-## Project info
+Portfolio site for a Shopify Plus developer, built with Next.js (App Router).
 
-**URL**: https://lovable.dev/projects/0c02c58d-5e91-4e22-a0f1-db0e2e1d92de
+## Tech stack
 
-## How can I edit this code?
+- Next.js 16 (App Router, Turbopack)
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Nodemailer for the contact form
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/0c02c58d-5e91-4e22-a0f1-db0e2e1d92de) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The dev server runs at http://localhost:3000.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Other scripts:
 
-**Use GitHub Codespaces**
+```sh
+npm run build   # production build
+npm run start   # serve the production build
+npm run lint    # eslint
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Environment variables
 
-## What technologies are used for this project?
+The contact form at `/contact` posts to `app/api/contact/route.ts`, which sends mail
+through Gmail. Copy `.env.example` to `.env.local` for local development and set the
+same three variables in your host's environment settings for production.
 
-This project is built with:
+| Variable | Description |
+| --- | --- |
+| `EMAIL_USER` | Gmail address used to send the mail |
+| `EMAIL_PASS` | Gmail [app password](https://support.google.com/accounts/answer/185833), not the account password |
+| `RECIPIENT_EMAIL` | Address that receives contact form submissions |
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Without these set, the form returns a 500 and no mail is sent. Everything else on the
+site is statically prerendered and works without configuration.
 
-## How can I deploy this project?
+## Project structure
 
-Simply open [Lovable](https://lovable.dev/projects/0c02c58d-5e91-4e22-a0f1-db0e2e1d92de) and click on Share -> Publish.
+```
+app/                routes, layouts, and the contact API route
+  case-study/[slug] generated from lib/data/projects.ts
+  blog/[slug]       generated from lib/data/blog.ts
+components/         shared UI components
+lib/data/           site content (projects, blog, services, testimonials, faq, nav)
+public/images/      project screenshots and other assets
+```
 
-## Can I connect a custom domain to my Lovable project?
+Content is plain TypeScript data, so adding a project or post means editing the
+matching file in `lib/data/` — the static routes are generated from it at build time.
 
-Yes, you can!
+## Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Deployed on Vercel. `vercel.json` pins the framework to `nextjs` so the build output
+is read from `.next`. If Vercel reports a missing output directory, clear any
+**Output Directory** override in Project Settings → Build & Development Settings;
+Next.js projects should use the auto-detected value.
