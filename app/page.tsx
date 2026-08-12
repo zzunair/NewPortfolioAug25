@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Eyebrow from "@/components/Eyebrow";
@@ -6,16 +7,32 @@ import ProjectCard from "@/components/ProjectCard";
 import TestimonialCard from "@/components/TestimonialCard";
 import FaqList from "@/components/FaqList";
 import ContactForm from "@/components/ContactForm";
+import JsonLd from "@/components/JsonLd";
 import { SERVICES } from "@/lib/data/services";
 import { PROJECTS } from "@/lib/data/projects";
 import { TESTIMONIALS } from "@/lib/data/testimonials";
 import { FAQ_ITEMS } from "@/lib/data/faq";
+import { buildPageMetadata, faqPageJsonLd, reviewsJsonLd } from "@/lib/seo";
+import { AUTHOR_BIO, CREDLY_BADGE_URL, YEARS_EXPERIENCE } from "@/lib/site";
 
-const BADGES = ["✓ Shopify Certified", "8+ Years", "100+ Stores", "Top Rated ★"];
+export const metadata: Metadata = buildPageMetadata({
+  description: AUTHOR_BIO,
+  path: "/",
+});
+
+const BADGES = [
+  { label: "✓ Shopify Certified", href: CREDLY_BADGE_URL },
+  { label: `${YEARS_EXPERIENCE} Years`, href: null },
+  { label: "100+ Stores", href: null },
+  { label: "Top Rated ★", href: null },
+];
 
 export default function HomePage() {
   return (
     <div>
+      <JsonLd data={faqPageJsonLd(FAQ_ITEMS)} />
+      <JsonLd data={reviewsJsonLd(TESTIMONIALS)} />
+
       {/* HERO */}
       <div className="relative overflow-hidden bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(0,212,255,0.08),transparent)] px-8 pb-24 pt-28 sm:pt-32">
         <div className="mx-auto max-w-[1240px]">
@@ -30,14 +47,26 @@ export default function HomePage() {
             Your long-term Shopify partner — <span className="text-accent">not just another developer.</span>
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
-            {BADGES.map((badge) => (
-              <div
-                key={badge}
-                className="rounded-md border border-accent/30 bg-accent/[0.06] px-3.5 py-2 font-mono text-xs text-accent"
-              >
-                {badge}
-              </div>
-            ))}
+            {BADGES.map((badge) =>
+              badge.href ? (
+                <a
+                  key={badge.label}
+                  href={badge.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-md border border-accent/30 bg-accent/[0.06] px-3.5 py-2 font-mono text-xs text-accent hover:border-accent/60"
+                >
+                  {badge.label}
+                </a>
+              ) : (
+                <div
+                  key={badge.label}
+                  className="rounded-md border border-accent/30 bg-accent/[0.06] px-3.5 py-2 font-mono text-xs text-accent"
+                >
+                  {badge.label}
+                </div>
+              ),
+            )}
           </div>
           <div className="mt-11 flex flex-wrap gap-4">
             <Link
@@ -133,7 +162,7 @@ export default function HomePage() {
             className="mx-auto mb-7 h-[88px] w-[88px] rounded-full border-2 border-accent object-cover"
           />
           <p className="text-xl leading-relaxed text-text">
-            I&apos;ve spent 8+ years building and scaling Shopify stores for brands across the US, UK,
+            I&apos;ve spent {YEARS_EXPERIENCE} years building and scaling Shopify stores for brands across the US, UK,
             and Canada — not as a hired gun, but as the developer teams keep coming back to.
           </p>
           <Link href="/about" className="mt-6 inline-block text-[15px] font-semibold text-accent">

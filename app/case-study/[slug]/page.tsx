@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PROJECTS, getProjectBySlug } from "@/lib/data/projects";
+import { buildPageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return PROJECTS.map((project) => ({ slug: project.slug }));
@@ -16,7 +17,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) return {};
-  return { title: project.name, description: project.desc };
+  return buildPageMetadata({
+    title: project.name,
+    description: project.desc,
+    path: `/case-study/${project.slug}`,
+    image: project.img,
+  });
 }
 
 export default async function CaseStudyPage({

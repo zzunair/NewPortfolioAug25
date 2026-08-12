@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Eyebrow from "@/components/Eyebrow";
 import { SERVICES } from "@/lib/data/services";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Services",
-  description: "Five ways I help Shopify brands: custom builds, migrations, app development, CRO, and ongoing retainers.",
-};
+  description:
+    "Five ways I help Shopify brands: custom builds, migrations, app development, CRO, and ongoing retainers.",
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (

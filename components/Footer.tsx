@@ -1,8 +1,4 @@
-const SOCIAL_LINKS = [
-  { href: "https://linkedin.com", label: "LinkedIn" },
-  { href: "https://github.com", label: "GitHub" },
-  { href: "https://upwork.com", label: "Upwork" },
-];
+import { SOCIAL_LINKS } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -14,7 +10,13 @@ export default function Footer() {
         </div>
         <div className="flex flex-wrap gap-6">
           {SOCIAL_LINKS.map((link) => (
-            <a key={link.label} href={link.href} className="text-[13px] text-muted hover:text-accent-soft">
+            <a
+              key={link.label}
+              href={link.href}
+              rel="me"
+              target="_blank"
+              className="text-[13px] text-muted hover:text-accent-soft"
+            >
               {link.label}
             </a>
           ))}

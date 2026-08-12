@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
+import { buildPageMetadata } from "@/lib/seo";
+import { SOCIAL } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Contact",
   description: "Tell me about your Shopify store and let's see if we're a good fit.",
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
@@ -18,13 +21,17 @@ export default function ContactPage() {
         </p>
         <div className="mt-12 flex flex-col gap-4">
           <a
-            href="https://linkedin.com"
+            href={SOCIAL.linkedin}
+            rel="me"
+            target="_blank"
             className="inline-block rounded-md border border-border px-4 py-3 text-sm font-semibold text-accent"
           >
             Message on LinkedIn →
           </a>
           <a
-            href="https://upwork.com"
+            href={SOCIAL.upwork}
+            rel="me"
+            target="_blank"
             className="inline-block rounded-md border border-border px-4 py-3 text-sm font-semibold text-accent"
           >
             Hire on Upwork →

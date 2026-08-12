@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import JsonLd from "@/components/JsonLd";
 import { BLOG_POSTS, getBlogPostBySlug } from "@/lib/data/blog";
+import { articleJsonLd, buildPageMetadata } from "@/lib/seo";
+import { AUTHOR_BIO, SOCIAL } from "@/lib/site";
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));
@@ -16,7 +19,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
   if (!post) return {};
-  return { title: post.title, description: post.excerpt };
+  return buildPageMetadata({
+    title: post.title,
+    description: post.excerpt,
+    path: `/blog/${post.slug}`,
+    type: "article",
+  });
 }
 
 export default async function BlogPostPage({
@@ -32,6 +40,8 @@ export default async function BlogPostPage({
 
   return (
     <div>
+      <JsonLd data={articleJsonLd(post)} />
+
       <div className="mx-auto max-w-[720px] px-8 pt-28">
         <Link href="/blog" className="text-[13px] text-muted hover:text-accent-soft">
           ← Back to insights
@@ -55,10 +65,20 @@ export default async function BlogPostPage({
             height={40}
             className="h-10 w-10 rounded-full border border-accent object-cover"
           />
-          <span className="text-sm text-muted">
-            Written by <span className="text-text">Zunair Shahid</span> — Certified Shopify Plus
-            Developer
-          </span>
+          <div>
+            <p className="text-sm text-text">
+              <Link href="/about" className="font-medium hover:text-accent-soft">
+                Zunair Shahid
+              </Link>
+              <span className="text-muted"> — Certified Shopify Plus Developer</span>
+            </p>
+            <p className="mt-0.5 text-[13px] text-muted">
+              {AUTHOR_BIO}{" "}
+              <Link href="/about" className="text-accent hover:text-accent-soft">
+                More about me →
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
 
@@ -117,13 +137,17 @@ export default async function BlogPostPage({
       <div className="mx-auto flex max-w-[720px] items-center gap-3.5 px-8 py-10">
         <span className="text-[13px] text-muted">Share:</span>
         <a
-          href="https://linkedin.com"
+          href={SOCIAL.linkedin}
+          rel="me"
+          target="_blank"
           className="rounded-md border border-border px-3 py-1.5 text-[13px] text-accent"
         >
           LinkedIn
         </a>
         <a
-          href="https://twitter.com"
+          href={SOCIAL.x}
+          target="_blank"
+          rel="noopener noreferrer"
           className="rounded-md border border-border px-3 py-1.5 text-[13px] text-accent"
         >
           X

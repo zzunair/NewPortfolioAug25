@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Pill from "@/components/Pill";
+import JsonLd from "@/components/JsonLd";
 import { SKILLS, EXPERIENCE, EDUCATION, CERTIFICATION } from "@/lib/data/about";
+import { personJsonLd, buildPageMetadata } from "@/lib/seo";
+import { SOCIAL_LINKS, YEARS_EXPERIENCE } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "About",
-  description: "Certified Shopify Plus developer based in Lahore, Pakistan, with 8+ years building ecommerce stores.",
-};
-
-const SOCIAL_LINKS = [
-  { href: "https://linkedin.com", label: "LinkedIn" },
-  { href: "https://github.com", label: "GitHub" },
-  { href: "https://upwork.com", label: "Upwork" },
-];
+  description: `Certified Shopify Plus developer based in Lahore, Pakistan, with ${YEARS_EXPERIENCE} years building ecommerce stores.`,
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
     <div>
+      <JsonLd data={personJsonLd()} />
+
       <div className="mx-auto max-w-[1000px] px-8 pb-16 pt-28">
         <Image
           src="/images/others/dp.png"
@@ -39,7 +39,7 @@ export default function AboutPage() {
           still works cleanly a year later.
         </p>
         <p className="text-base leading-relaxed text-muted">
-          Over the past 8+ years I&apos;ve built 100+ Shopify and Shopify Plus stores for DTC
+          Over the past {YEARS_EXPERIENCE} years I&apos;ve built 100+ Shopify and Shopify Plus stores for DTC
           brands, enterprise retailers, and the agencies that serve them — mostly across the US,
           UK, and Canada. Clients tend to start with a single project and stay for years, because I
           treat every store like it&apos;s still mine to look after once it&apos;s live.
@@ -51,7 +51,12 @@ export default function AboutPage() {
       </div>
 
       <div className="border-y border-border bg-surface px-8 py-14">
-        <div className="mx-auto flex max-w-[760px] flex-wrap items-center gap-5">
+        <a
+          href={CERTIFICATION.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mx-auto flex max-w-[760px] flex-wrap items-center gap-5 hover:opacity-90"
+        >
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-accent font-mono text-xl text-accent">
             ✓
           </div>
@@ -59,7 +64,7 @@ export default function AboutPage() {
             <div className="text-[15px] font-semibold text-text">{CERTIFICATION.title}</div>
             <div className="mt-1 font-mono text-[13px] text-muted">{CERTIFICATION.issuer}</div>
           </div>
-        </div>
+        </a>
       </div>
 
       <div className="mx-auto max-w-[760px] px-8 py-24">
@@ -103,7 +108,13 @@ export default function AboutPage() {
       <div className="border-t border-border px-8 py-16 text-center">
         <div className="flex flex-wrap justify-center gap-8">
           {SOCIAL_LINKS.map((link) => (
-            <a key={link.label} href={link.href} className="text-sm font-medium text-muted hover:text-accent-soft">
+            <a
+              key={link.label}
+              href={link.href}
+              rel="me"
+              target="_blank"
+              className="text-sm font-medium text-muted hover:text-accent-soft"
+            >
               {link.label}
             </a>
           ))}

@@ -43,4 +43,5 @@ export const EDUCATION = {
 export const CERTIFICATION = {
   title: "Shopify Certified — Liquid Storefronts for Theme Developers",
   issuer: "Shopify · April 2024",
+  url: "https://www.credly.com/badges/e9433e5b-83e8-4947-adbf-7e6cb8addc06/public_url",
 };

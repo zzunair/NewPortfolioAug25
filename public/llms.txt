@@ -1,0 +1,30 @@
+# Zunair Shahid — Shopify Plus Developer
+
+> Certified Shopify Plus developer based in Lahore, Pakistan. Builds and scales ecommerce stores for brands across the US, UK, and Canada.
+
+## Who
+
+Zunair Shahid is a Certified Shopify Plus Developer with 8+ years of experience and 100+ Shopify / Shopify Plus stores shipped. Focus: long-term partnerships over one-off projects — fewer clients, deeper relationships, and retainers after launch.
+
+## Core services
+
+- Shopify Plus store builds and custom Liquid themes
+- WooCommerce → Shopify migrations (SEO-safe, staged cutovers)
+- Custom Shopify app development (private and public)
+- Conversion rate optimization (CRO)
+- Ongoing retainers for maintenance, features, and priority support
+
+## Key pages
+
+- About: https://zunairshahid.com/about
+- Services: https://zunairshahid.com/services
+- Portfolio / work: https://zunairshahid.com/portfolio
+- Blog: https://zunairshahid.com/blog
+- Contact: https://zunairshahid.com/contact
+
+## Profiles
+
+- LinkedIn: https://pk.linkedin.com/in/zunair-shahid
+- GitHub: https://github.com/zzunair
+- Upwork: https://www.upwork.com/freelancers/~0129309c6c512e86ea
+- Site: https://zunairshahid.com
