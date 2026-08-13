@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 
 const PROJECT_TYPES = [
   { value: "build", label: "Store Build" },
@@ -22,7 +22,25 @@ const BUDGET_RANGES = [
 const inputClass =
   "rounded-md border border-border bg-card px-4 py-3.5 text-sm text-text placeholder:text-muted focus:border-accent focus:outline-none";
 
+function FieldLabel({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) {
+  return (
+    <label htmlFor={htmlFor} className="sr-only">
+      {children}
+    </label>
+  );
+}
+
 export default function ContactForm({ showBudget = false }: { showBudget?: boolean }) {
+  const uid = useId();
+  const ids = {
+    name: `${uid}-name`,
+    email: `${uid}-email`,
+    storeUrl: `${uid}-store-url`,
+    projectType: `${uid}-project-type`,
+    budget: `${uid}-budget`,
+    message: `${uid}-message`,
+  };
+
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState({
@@ -61,30 +79,50 @@ export default function ContactForm({ showBudget = false }: { showBudget?: boole
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <FieldLabel htmlFor={ids.name}>Name</FieldLabel>
       <input
+        id={ids.name}
+        name="name"
         type="text"
+        autoComplete="name"
         placeholder="Name"
         required
         value={form.name}
         onChange={update("name")}
         className={inputClass}
       />
+      <FieldLabel htmlFor={ids.email}>Email</FieldLabel>
       <input
+        id={ids.email}
+        name="email"
         type="email"
+        autoComplete="email"
         placeholder="Email"
         required
         value={form.email}
         onChange={update("email")}
         className={inputClass}
       />
+      <FieldLabel htmlFor={ids.storeUrl}>Store URL</FieldLabel>
       <input
+        id={ids.storeUrl}
+        name="storeUrl"
         type="text"
+        inputMode="url"
+        autoComplete="url"
         placeholder="Store URL"
         value={form.storeUrl}
         onChange={update("storeUrl")}
         className={inputClass}
       />
-      <select value={form.projectType} onChange={update("projectType")} className={inputClass}>
+      <FieldLabel htmlFor={ids.projectType}>Project type</FieldLabel>
+      <select
+        id={ids.projectType}
+        name="projectType"
+        value={form.projectType}
+        onChange={update("projectType")}
+        className={inputClass}
+      >
         <option value="">Project type</option>
         {PROJECT_TYPES.map((opt) => (
           <option key={opt.value} value={opt.value}>
@@ -93,16 +131,28 @@ export default function ContactForm({ showBudget = false }: { showBudget?: boole
         ))}
       </select>
       {showBudget && (
-        <select value={form.budget} onChange={update("budget")} className={inputClass}>
-          <option value="">Budget range</option>
-          {BUDGET_RANGES.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+        <>
+          <FieldLabel htmlFor={ids.budget}>Budget range</FieldLabel>
+          <select
+            id={ids.budget}
+            name="budget"
+            value={form.budget}
+            onChange={update("budget")}
+            className={inputClass}
+          >
+            <option value="">Budget range</option>
+            {BUDGET_RANGES.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </>
       )}
+      <FieldLabel htmlFor={ids.message}>Message</FieldLabel>
       <textarea
+        id={ids.message}
+        name="message"
         placeholder="Message"
         required
         rows={4}
@@ -117,14 +167,17 @@ export default function ContactForm({ showBudget = false }: { showBudget?: boole
       >
         {status === "loading" ? "Sending…" : "Send message"}
       </button>
-      {status === "success" && (
-        <p className="text-center font-mono text-sm text-accent">
-          Thanks — I&apos;ll get back to you within 4 hours.
-        </p>
-      )}
-      {status === "error" && (
-        <p className="text-center font-mono text-sm text-red-400">{errorMessage}</p>
-      )}
+      {/* empty:hidden keeps the idle layout gap-free while the live region stays mounted */}
+      <div aria-live="polite" className="empty:hidden">
+        {status === "success" && (
+          <p className="text-center font-mono text-sm text-accent">
+            Thanks — I&apos;ll get back to you within 4 hours.
+          </p>
+        )}
+        {status === "error" && (
+          <p className="text-center font-mono text-sm text-red-400">{errorMessage}</p>
+        )}
+      </div>
     </form>
   );
 }

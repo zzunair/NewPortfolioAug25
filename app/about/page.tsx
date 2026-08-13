@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Pill from "@/components/Pill";
-import JsonLd from "@/components/JsonLd";
 import { SKILLS, EXPERIENCE, EDUCATION, CERTIFICATION } from "@/lib/data/about";
-import { personJsonLd, buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/seo";
 import { SOCIAL_LINKS, YEARS_EXPERIENCE } from "@/lib/site";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -15,8 +14,6 @@ export const metadata: Metadata = buildPageMetadata({
 export default function AboutPage() {
   return (
     <div>
-      <JsonLd data={personJsonLd()} />
-
       <div className="mx-auto max-w-[1000px] px-8 pb-16 pt-28">
         <Image
           src="/images/others/dp.png"

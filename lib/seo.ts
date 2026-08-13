@@ -3,6 +3,7 @@ import {
   AUTHOR_BIO,
   JOB_TITLE,
   OG_IMAGE,
+  PERSON_ID,
   SAME_AS,
   SITE_NAME,
   SITE_TITLE,
@@ -57,6 +58,7 @@ export function personJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": PERSON_ID,
     name: SITE_NAME,
     jobTitle: JOB_TITLE,
     url: SITE_URL,
@@ -126,6 +128,7 @@ export function reviewsJsonLd(testimonials: Testimonial[]) {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": PERSON_ID,
     name: SITE_NAME,
     url: SITE_URL,
     jobTitle: JOB_TITLE,
@@ -140,15 +143,30 @@ export function reviewsJsonLd(testimonials: Testimonial[]) {
   };
 }
 
+/**
+ * Schema.org requires ISO 8601 dates; post dates are authored as "Aug 12, 2026".
+ * Read back the local calendar parts — toISOString() would shift the day in non-UTC build zones.
+ */
+function toIsoDate(date: string) {
+  const parsed = new Date(date);
+  if (Number.isNaN(parsed.getTime())) return undefined;
+  const month = String(parsed.getMonth() + 1).padStart(2, "0");
+  const day = String(parsed.getDate()).padStart(2, "0");
+  return `${parsed.getFullYear()}-${month}-${day}`;
+}
+
 export function articleJsonLd(post: BlogPost) {
+  const datePublished = toIsoDate(post.date);
+
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.excerpt,
-    datePublished: post.date,
+    ...(datePublished ? { datePublished, dateModified: datePublished } : {}),
     author: {
       "@type": "Person",
+      "@id": PERSON_ID,
       name: SITE_NAME,
       url: absoluteUrl("/about"),
       jobTitle: JOB_TITLE,
@@ -157,6 +175,7 @@ export function articleJsonLd(post: BlogPost) {
     },
     publisher: {
       "@type": "Person",
+      "@id": PERSON_ID,
       name: SITE_NAME,
       url: SITE_URL,
     },
