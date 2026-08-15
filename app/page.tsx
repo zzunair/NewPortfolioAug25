@@ -12,7 +12,7 @@ import { SERVICES } from "@/lib/data/services";
 import { PROJECTS } from "@/lib/data/projects";
 import { TESTIMONIALS } from "@/lib/data/testimonials";
 import { FAQ_ITEMS } from "@/lib/data/faq";
-import { buildPageMetadata, faqPageJsonLd, reviewsJsonLd } from "@/lib/seo";
+import { buildPageMetadata, faqPageJsonLd } from "@/lib/seo";
 import { AUTHOR_BIO, CREDLY_BADGE_URL, YEARS_EXPERIENCE } from "@/lib/site";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -31,7 +31,6 @@ export default function HomePage() {
   return (
     <div>
       <JsonLd data={faqPageJsonLd(FAQ_ITEMS)} />
-      <JsonLd data={reviewsJsonLd(TESTIMONIALS)} />
 
       {/* HERO */}
       <div className="relative overflow-hidden bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(0,212,255,0.08),transparent)] px-8 pb-24 pt-28 sm:pt-32">

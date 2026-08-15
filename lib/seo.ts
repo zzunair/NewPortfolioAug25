@@ -11,7 +11,6 @@ import {
   absoluteUrl,
 } from "@/lib/site";
 import type { FaqItem } from "@/lib/data/faq";
-import type { Testimonial } from "@/lib/data/testimonials";
 import type { BlogPost } from "@/lib/data/blog";
 
 type PageMetaInput = {
@@ -101,45 +100,6 @@ export function faqPageJsonLd(items: FaqItem[]) {
         text: item.answer,
       },
     })),
-  };
-}
-
-export function reviewsJsonLd(testimonials: Testimonial[]) {
-  const reviews = testimonials.map((t) => ({
-    "@type": "Review",
-    reviewBody: t.quote,
-    author: {
-      "@type": "Person",
-      name: t.name,
-      ...(t.companyUrl
-        ? {
-            sameAs: t.companyUrl,
-            url: t.companyUrl,
-          }
-        : {}),
-    },
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: "5",
-      bestRating: "5",
-    },
-  }));
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": PERSON_ID,
-    name: SITE_NAME,
-    url: SITE_URL,
-    jobTitle: JOB_TITLE,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5",
-      bestRating: "5",
-      ratingCount: String(testimonials.length),
-      reviewCount: String(testimonials.length),
-    },
-    review: reviews,
   };
 }
 
