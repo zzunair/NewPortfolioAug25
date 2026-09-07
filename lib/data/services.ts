@@ -26,8 +26,25 @@ export const SERVICES: Service[] = [
     ],
   },
   {
-    slug: "migrations",
+    slug: "shopify-headless",
     number: "02",
+    icon: "⬡",
+    title: "Shopify Headless & Hydrogen Storefronts",
+    blurb:
+      "Blazing-fast headless Shopify storefronts powered by Hydrogen, Next.js, and the Storefront API.",
+    whoFor:
+      "Brands that need custom UX, omnichannel commerce, or performance beyond what Liquid themes can deliver.",
+    included: [
+      "Shopify Hydrogen & Remix storefront development",
+      "Next.js + Storefront API integration",
+      "Hydrogen deployment on Shopify Oxygen",
+      "Headless cart, checkout & customer accounts via Shopify APIs",
+      "Performance tuning & SEO for JavaScript-rendered storefronts",
+    ],
+  },
+  {
+    slug: "migrations",
+    number: "03",
     icon: "⇄",
     title: "WooCommerce → Shopify Migrations",
     blurb: "Seamless WooCommerce → Shopify migrations with zero SEO or data loss.",
@@ -42,7 +59,7 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "app-development",
-    number: "03",
+    number: "04",
     icon: "▣",
     title: "Shopify App Development",
     blurb: "Custom Shopify apps that extend your store beyond what themes allow.",
@@ -56,7 +73,7 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "cro",
-    number: "04",
+    number: "05",
     icon: "△",
     title: "CRO & Conversion Optimization",
     blurb: "Data-driven testing to turn more of your traffic into revenue.",
@@ -71,7 +88,7 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "retainer",
-    number: "05",
+    number: "06",
     icon: "∞",
     title: "Retainer & Ongoing Maintenance",
     blurb: "Ongoing support so your store keeps shipping, long after launch.",

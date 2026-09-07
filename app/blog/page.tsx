@@ -2,12 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Eyebrow from "@/components/Eyebrow";
 import { BLOG_POSTS } from "@/lib/data/blog";
-import { buildPageMetadata } from "@/lib/seo";
+import {
+  buildOgImageUrl,
+  buildPageMetadata,
+  PAGE_DESCRIPTIONS,
+  PAGE_TITLES,
+} from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Blog",
-  description: "Notes on Shopify, migrations, and ecommerce strategy.",
+  title: PAGE_TITLES.blog,
+  description: PAGE_DESCRIPTIONS.blog,
   path: "/blog",
+  image: buildOgImageUrl("Shopify Blog", "Notes on Shopify & Ecommerce"),
 });
 
 export default function BlogPage() {

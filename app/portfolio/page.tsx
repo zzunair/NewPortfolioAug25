@@ -2,12 +2,18 @@ import type { Metadata } from "next";
 import Eyebrow from "@/components/Eyebrow";
 import PortfolioFilter from "@/components/PortfolioFilter";
 import { PROJECTS } from "@/lib/data/projects";
-import { buildPageMetadata } from "@/lib/seo";
+import {
+  buildOgImageUrl,
+  buildPageMetadata,
+  PAGE_DESCRIPTIONS,
+  PAGE_TITLES,
+} from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Work",
-  description: "Case studies and Shopify projects across store builds, migrations, apps, and CRO.",
+  title: PAGE_TITLES.portfolio,
+  description: PAGE_DESCRIPTIONS.portfolio,
   path: "/portfolio",
+  image: buildOgImageUrl("Portfolio", "100+ Shopify Projects"),
 });
 
 export default function PortfolioPage() {

@@ -4,8 +4,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { BLOG_POSTS, getBlogPostBySlug } from "@/lib/data/blog";
-import { articleJsonLd, buildPageMetadata } from "@/lib/seo";
-import { AUTHOR_BIO, SOCIAL } from "@/lib/site";
+import {
+  blogPostTitle,
+  blogPostingJsonLd,
+  breadcrumbJsonLd,
+  buildOgImageUrl,
+  buildPageMetadata,
+  PAGE_DESCRIPTIONS,
+} from "@/lib/seo";
+import { SOCIAL } from "@/lib/site";
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));
@@ -20,10 +27,29 @@ export async function generateMetadata({
   const post = getBlogPostBySlug(slug);
   if (!post) return {};
   return buildPageMetadata({
-    title: post.title,
-    description: post.excerpt,
+    title: blogPostTitle(post),
+    description: post.excerpt || PAGE_DESCRIPTIONS.blog,
     path: `/blog/${post.slug}`,
     type: "article",
+    image: buildOgImageUrl(post.title, post.tag),
+    imageAlt: post.title,
+  });
+}
+
+function renderParagraph(text: string) {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+
+  return parts.map((part, index) => {
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
+      const [, label, href] = linkMatch;
+      return (
+        <Link key={index} href={href} className="text-accent hover:text-accent-soft">
+          {label}
+        </Link>
+      );
+    }
+    return part;
   });
 }
 
@@ -40,7 +66,16 @@ export default async function BlogPostPage({
 
   return (
     <div>
-      <JsonLd data={articleJsonLd(post)} />
+      <JsonLd
+        data={[
+          blogPostingJsonLd(post),
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ]),
+        ]}
+      />
 
       <div className="mx-auto max-w-[720px] px-8 pt-28">
         <Link href="/blog" className="text-[13px] text-muted hover:text-accent-soft">
@@ -60,7 +95,7 @@ export default async function BlogPostPage({
         <div className="mt-8 flex items-center gap-3 border-y border-border py-5">
           <Image
             src="/images/others/dp.png"
-            alt="Zunair Shahid"
+            alt="Zunair Shahid — author photo"
             width={40}
             height={40}
             className="h-10 w-10 rounded-full border border-accent object-cover"
@@ -73,7 +108,7 @@ export default async function BlogPostPage({
               <span className="text-muted"> — Certified Shopify Plus Developer</span>
             </p>
             <p className="mt-0.5 text-[13px] text-muted">
-              {AUTHOR_BIO}{" "}
+              {post.excerpt}{" "}
               <Link href="/about" className="text-accent hover:text-accent-soft">
                 More about me →
               </Link>
@@ -104,7 +139,7 @@ export default async function BlogPostPage({
             }
             return (
               <p key={i} className="text-base leading-relaxed text-muted">
-                {block.text}
+                {renderParagraph(block.text)}
               </p>
             );
           })

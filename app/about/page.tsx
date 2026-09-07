@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Pill from "@/components/Pill";
 import { SKILLS, EXPERIENCE, EDUCATION, CERTIFICATION } from "@/lib/data/about";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildOgImageUrl, buildPageMetadata, PAGE_DESCRIPTIONS, PAGE_TITLES } from "@/lib/seo";
 import { SOCIAL_LINKS, YEARS_EXPERIENCE } from "@/lib/site";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "About",
-  description: `Certified Shopify Plus developer based in Lahore, Pakistan, with ${YEARS_EXPERIENCE} years building ecommerce stores.`,
+  title: PAGE_TITLES.about,
+  description: PAGE_DESCRIPTIONS.about,
   path: "/about",
+  image: buildOgImageUrl("About Zunair Shahid", "Certified Shopify Plus Developer"),
 });
 
 export default function AboutPage() {

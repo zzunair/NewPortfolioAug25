@@ -1,26 +1,43 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Eyebrow from "@/components/Eyebrow";
+import JsonLd from "@/components/JsonLd";
 import { SERVICES } from "@/lib/data/services";
-import { buildPageMetadata } from "@/lib/seo";
+import {
+  breadcrumbJsonLd,
+  buildOgImageUrl,
+  buildPageMetadata,
+  PAGE_DESCRIPTIONS,
+  PAGE_TITLES,
+  servicesItemListJsonLd,
+} from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Services",
-  description:
-    "Five ways I help Shopify brands: custom builds, migrations, app development, CRO, and ongoing retainers.",
+  title: PAGE_TITLES.services,
+  description: PAGE_DESCRIPTIONS.services,
   path: "/services",
+  image: buildOgImageUrl("Shopify Development Services", "Builds, Migrations & Apps"),
 });
 
 export default function ServicesPage() {
   return (
     <div>
+      <JsonLd
+        data={[
+          servicesItemListJsonLd(),
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Services", path: "/services" },
+          ]),
+        ]}
+      />
       <div className="mx-auto max-w-[900px] px-8 pb-16 pt-28">
         <Eyebrow>services</Eyebrow>
         <h1 className="mt-3.5 text-4xl font-bold tracking-tight text-text sm:text-5xl lg:text-[52px]">
           How I can help your store
         </h1>
         <p className="mt-4 max-w-[600px] text-lg leading-relaxed text-muted">
-          Five ways brands typically bring me in — most start with one and move into an ongoing
+          Six ways brands typically bring me in — most start with one and move into an ongoing
           retainer.
         </p>
       </div>

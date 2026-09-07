@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
-import { buildPageMetadata } from "@/lib/seo";
+import {
+  buildOgImageUrl,
+  buildPageMetadata,
+  PAGE_DESCRIPTIONS,
+  PAGE_TITLES,
+} from "@/lib/seo";
 import { SOCIAL } from "@/lib/site";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Contact",
-  description: "Tell me about your Shopify store and let's see if we're a good fit.",
+  title: PAGE_TITLES.contact,
+  description: PAGE_DESCRIPTIONS.contact,
   path: "/contact",
+  image: buildOgImageUrl("Work With Me", "Long-Term Shopify Partnership"),
 });
 
 export default function ContactPage() {

@@ -12,12 +12,21 @@ import { SERVICES } from "@/lib/data/services";
 import { PROJECTS } from "@/lib/data/projects";
 import { TESTIMONIALS } from "@/lib/data/testimonials";
 import { FAQ_ITEMS } from "@/lib/data/faq";
-import { buildPageMetadata, faqPageJsonLd } from "@/lib/seo";
-import { AUTHOR_BIO, CREDLY_BADGE_URL, YEARS_EXPERIENCE } from "@/lib/site";
+import {
+  buildOgImageUrl,
+  buildPageMetadata,
+  faqPageJsonLd,
+  PAGE_DESCRIPTIONS,
+  PAGE_TITLES,
+  personJsonLd,
+} from "@/lib/seo";
+import { CREDLY_BADGE_URL, YEARS_EXPERIENCE } from "@/lib/site";
 
 export const metadata: Metadata = buildPageMetadata({
-  description: AUTHOR_BIO,
+  title: PAGE_TITLES.home,
+  description: PAGE_DESCRIPTIONS.home,
   path: "/",
+  image: buildOgImageUrl("Zunair Shahid", "Certified Shopify Plus Developer"),
 });
 
 const BADGES = [
@@ -30,6 +39,7 @@ const BADGES = [
 export default function HomePage() {
   return (
     <div>
+      <JsonLd data={personJsonLd()} />
       <JsonLd data={faqPageJsonLd(FAQ_ITEMS)} />
 
       {/* HERO */}
@@ -155,7 +165,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-[820px] text-center">
           <Image
             src="/images/others/dp.png"
-            alt="Zunair Shahid, Certified Shopify Plus Developer"
+            alt="Zunair Shahid, Certified Shopify Plus Developer based in Lahore, Pakistan"
             width={88}
             height={88}
             className="mx-auto mb-7 h-[88px] w-[88px] rounded-full border-2 border-accent object-cover"

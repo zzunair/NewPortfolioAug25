@@ -2,8 +2,20 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import JsonLd from "@/components/JsonLd";
 import { PROJECTS, getProjectBySlug } from "@/lib/data/projects";
-import { buildPageMetadata } from "@/lib/seo";
+import {
+  breadcrumbJsonLd,
+  buildPageMetadata,
+  caseStudyDescription,
+  caseStudyTitle,
+} from "@/lib/seo";
+
+const CASE_STUDY_OG_ALT: Record<string, string> = {
+  "wooloomooloo-shoes": "Wooloomooloo Shoes Shopify Plus storefront built by Zunair Shahid",
+  mchn: "MCHN custom Shopify subscription app built by Zunair Shahid",
+  drinklic: "Drinklic WooCommerce to Shopify migration by Zunair Shahid",
+};
 
 export function generateStaticParams() {
   return PROJECTS.map((project) => ({ slug: project.slug }));
@@ -18,10 +30,11 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return {};
   return buildPageMetadata({
-    title: project.name,
-    description: project.desc,
+    title: caseStudyTitle(project),
+    description: caseStudyDescription(project),
     path: `/case-study/${project.slug}`,
     image: project.img,
+    imageAlt: CASE_STUDY_OG_ALT[project.slug] ?? `${project.name} Shopify store built by Zunair Shahid`,
   });
 }
 
@@ -42,6 +55,14 @@ export default async function CaseStudyPage({
 
   return (
     <div>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Work", path: "/portfolio" },
+          { name: project.name, path: `/case-study/${project.slug}` },
+        ])}
+      />
+
       <div className="mx-auto max-w-[900px] px-8 pb-10 pt-28">
         <Link href="/portfolio" className="text-[13px] text-muted hover:text-accent-soft">
           ← Back to work
