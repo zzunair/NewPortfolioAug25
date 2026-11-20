@@ -133,9 +133,14 @@ export default function HomePage() {
                 Recent work
               </h2>
             </div>
-            <Link href="/portfolio" className="text-sm font-semibold text-accent">
-              View all work →
-            </Link>
+            <div className="flex flex-wrap gap-5">
+              <Link href="/projects" className="text-sm font-semibold text-accent">
+                All projects →
+              </Link>
+              <Link href="/portfolio" className="text-sm font-semibold text-accent">
+                View all work →
+              </Link>
+            </div>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {PROJECTS.slice(0, 3).map((project) => (

@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Analytics from "@/components/Analytics";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { analyticsMeasurementId } from "@/lib/analytics";
 import { buildOgImageUrl, PAGE_DESCRIPTIONS, PAGE_TITLES } from "@/lib/seo";
 import { SITE_NAME, SITE_URL, TWITTER_HANDLE } from "@/lib/site";
 
@@ -47,12 +50,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const gaId = analyticsMeasurementId();
+
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-bg font-sans text-text">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`} suppressHydrationWarning>
+      <body className="flex min-h-full flex-col bg-bg font-sans text-text" suppressHydrationWarning>
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        {gaId ? (
+          <Suspense fallback={null}>
+            <Analytics gaId={gaId} />
+          </Suspense>
+        ) : null}
       </body>
     </html>
   );

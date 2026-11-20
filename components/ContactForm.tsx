@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 const PROJECT_TYPES = [
   { value: "build", label: "Store Build" },
@@ -71,6 +72,7 @@ export default function ContactForm({ showBudget = false }: { showBudget?: boole
       }
       setStatus("success");
       setForm({ name: "", email: "", storeUrl: "", projectType: "", budget: "", message: "" });
+      trackEvent("generate_lead", { form_id: "contact" });
     } catch (err) {
       setStatus("error");
       setErrorMessage(err instanceof Error ? err.message : "Something went wrong. Please try again.");

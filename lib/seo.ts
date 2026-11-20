@@ -11,6 +11,7 @@ import {
 import type { FaqItem } from "@/lib/data/faq";
 import type { BlogPost } from "@/lib/data/blog";
 import type { Project } from "@/lib/data/projects";
+import { SHOWCASE_PROJECTS } from "@/lib/data/showcase";
 
 const TWITTER_HANDLE = "@zunair_says";
 
@@ -22,6 +23,8 @@ export const PAGE_DESCRIPTIONS = {
     "Custom Shopify store builds, WooCommerce to Shopify migrations, app development, CRO, and retainer support — by Certified Shopify Plus developer Zunair Shahid.",
   portfolio:
     "Case studies from 100+ Shopify and Shopify Plus projects — custom storefronts, migrations, and app builds by Certified Shopify Plus developer Zunair Shahid.",
+  projects:
+    "84 live projects by Zunair Shahid — Shopify Plus, Shopify, BigCommerce, WordPress, Next.js, and MERN builds, with the stack and live link for each.",
   blog: "Practical guides on Shopify development, store migrations, app builds, and ecommerce strategy — written by Certified Shopify Plus developer Zunair Shahid.",
   contact:
     "Start a Shopify project or retainer partnership with Zunair Shahid — Certified Shopify Plus developer serving US, UK & Canada brands. Responds within 4 hours.",
@@ -32,6 +35,7 @@ export const PAGE_TITLES = {
   about: "About Zunair Shahid — Certified Shopify Plus Developer",
   services: "Shopify Development Services — Builds, Migrations & Apps | Zunair Shahid",
   portfolio: "Shopify Portfolio — 100+ Store Projects | Zunair Shahid",
+  projects: "Projects — 84 Live Builds with Stacks & Links | Zunair Shahid",
   blog: "Shopify Development Blog — Tips, Migrations & Strategy | Zunair Shahid",
   contact: "Work With Zunair Shahid — Certified Shopify Plus Developer",
 } as const;
@@ -230,6 +234,24 @@ export function breadcrumbJsonLd(
       position: index + 1,
       name: item.name,
       item: absoluteUrl(item.path),
+    })),
+  };
+}
+
+export function projectsItemListJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Projects by Zunair Shahid",
+    description:
+      "Live storefronts, apps, and sites built by Zunair Shahid, with the stack and public link for each.",
+    url: absoluteUrl("/projects"),
+    numberOfItems: SHOWCASE_PROJECTS.length,
+    itemListElement: SHOWCASE_PROJECTS.map((project, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: project.name,
+      ...(project.url ? { url: project.url } : {}),
     })),
   };
 }

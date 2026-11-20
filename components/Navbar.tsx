@@ -26,7 +26,7 @@ export default function Navbar() {
           <span className="text-[16px] font-semibold text-text">Zunair Shahid</span>
         </Link>
 
-        <div className="hidden items-center gap-8 min-[860px]:flex">
+        <div className="hidden items-center gap-8 min-[1000px]:flex">
           {NAV_LINKS.map((link) => {
             const active = isActive(link.href, pathname);
             return (
@@ -44,7 +44,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           <Link
             href="/contact"
-            className="hidden rounded-md bg-accent px-5 py-2.5 text-[14px] font-semibold text-bg transition-shadow hover:shadow-[0_0_20px_rgba(0,212,255,0.4)] min-[860px]:flex"
+            className="hidden rounded-md bg-accent px-5 py-2.5 text-[14px] font-semibold text-bg transition-shadow hover:shadow-[0_0_20px_rgba(0,212,255,0.4)] min-[1000px]:flex"
           >
             Start a project
           </Link>
@@ -52,7 +52,7 @@ export default function Navbar() {
             type="button"
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
-            className="flex h-10 w-10 items-center justify-center rounded-md border border-border text-[18px] text-text min-[860px]:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-md border border-border text-[18px] text-text min-[1000px]:hidden"
           >
             {open ? "✕" : "☰"}
           </button>
@@ -61,7 +61,7 @@ export default function Navbar() {
     </div>
 
     {open && (
-      <div className="fixed inset-0 z-[100] flex flex-col bg-bg px-8 py-6 min-[860px]:hidden">
+      <div className="fixed inset-0 z-[100] flex flex-col bg-bg px-8 py-6 min-[1000px]:hidden">
         <div className="flex justify-end">
           <button
             type="button"
